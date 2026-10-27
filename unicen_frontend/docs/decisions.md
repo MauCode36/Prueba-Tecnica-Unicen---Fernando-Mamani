@@ -72,6 +72,32 @@ Registro vivo de las decisiones técnicas del frontend (formato ADR liviano). La
 - **Justificación:** Son dos aplicaciones independientes que se comunican por HTTP; una herramienta de monorepo agregaría configuración sin aportar beneficios.
 - **Consecuencias:** La imagen de producción es multi-stage (build con `node:22-alpine` → `nginx:alpine`), con fallback para la SPA y proxy inverso de `/api` hacia el contenedor de la API (no hace falta configurar CORS).
 
+## FD-011 — Opciones de selects por feature
+- **Fecha:** 2026-10-27
+- **Decisión:** `courses` consulta `/subjects` y `/users?role=TEACHER` desde su propio `course-options.service.ts`. El de docentes descarta los inactivos, porque el backend los rechaza al asignarlos. Al editar, se conserva el docente actual aunque esté inactivo.
+- **Justificación:** `AGENTS.md` prohíbe importar internos de otro feature.
+- **Consecuencias:** Se mueve a `shared/` si aparece un tercer consumidor. Las opciones se refrescan en cada apertura del diálogo y sus keys viven fuera de `coursesKeys.all`.
+
+## FD-012 — Gestión en la URL
+- **Fecha:** 2026-10-27
+- **Decisión:** El filtro de gestión vive en `?term=`, con `getCurrentTerm()` por defecto. Un valor mal formado se ignora.
+- **Justificación:** El enlace se puede compartir y la vista se conserva al recargar; un valor inválido haría que el backend respondiera `400`.
+
+## FD-013 — Componentes de estado compartidos
+- **Fecha:** 2026-10-27
+- **Decisión:** `DataState`, `TableSkeleton` y `ConfirmDialog` en `shared/components`.
+- **Justificación:** Estandarizan los estados de carga, vacío y error que exige `AGENTS.md` y los usarán E3 y E4.
+
+## FD-014 — Errores por status HTTP
+- **Fecha:** 2026-10-27
+- **Decisión:** Las páginas distinguen los errores con `getHttpStatus()` y las queries de detalle no reintentan los 4xx.
+- **Justificación:** Los `400` de validación y los `403` del guard de roles usan el formato por defecto de Nest, así que el campo `error` del cuerpo no es confiable.
+
+## FD-015 — Tipos de formulario con entrada y salida
+- **Fecha:** 2026-10-27
+- **Decisión:** Con Zod 4, los formularios que usan `z.coerce` o `.transform()` tipan `useForm<z.input, unknown, z.output>`.
+- **Justificación:** La entrada (`unknown`) y la salida difieren, y `z.infer` no compila con el resolver.
+
 ---
 
 ## Decisiones pendientes
