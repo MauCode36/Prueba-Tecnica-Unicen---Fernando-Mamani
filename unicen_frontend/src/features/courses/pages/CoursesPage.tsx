@@ -65,7 +65,7 @@ export function CoursesPage() {
           {canManage ? (
             <CourseManagementTable courses={data ?? []} onEdit={handleEdit} onDelete={setDeleting} />
           ) : (
-            <CourseOfferTable courses={data ?? []} />
+            <CourseOfferTable courses={data ?? []} canEnroll={user?.role === Role.STUDENT} />
           )}
         </div>
       </DataState>

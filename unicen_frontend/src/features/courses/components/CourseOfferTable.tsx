@@ -1,3 +1,4 @@
+import { EnrollButton } from '@/features/enrollments'
 import { Badge } from '@/shared/components/ui/badge'
 import {
   Table,
@@ -13,13 +14,15 @@ import { SeatsBadge } from './SeatsBadge'
 interface CourseOfferTableProps {
   /** Courses of the selected term. */
   courses: Course[]
+  /** Shows the enroll button; only STUDENT enrolls themselves. */
+  canEnroll: boolean
 }
 
 /**
- * Read-only offering for STUDENT and TEACHER. The last column is reserved
- * for the enroll button of E3.
+ * Offering for STUDENT and TEACHER. STUDENT also gets the enroll button;
+ * TEACHER stays read-only.
  */
-export function CourseOfferTable({ courses }: CourseOfferTableProps) {
+export function CourseOfferTable({ courses, canEnroll }: CourseOfferTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -48,7 +51,7 @@ export function CourseOfferTable({ courses }: CourseOfferTableProps) {
               <SeatsBadge availableSeats={course.availableSeats} maxCapacity={course.maxCapacity} />
             </TableCell>
             <TableCell>{course.isEnrolled && <Badge variant="outline">Inscrito</Badge>}</TableCell>
-            <TableCell />
+            <TableCell>{canEnroll && <EnrollButton course={course} />}</TableCell>
           </TableRow>
         ))}
       </TableBody>
