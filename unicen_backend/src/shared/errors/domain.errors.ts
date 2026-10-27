@@ -28,9 +28,7 @@ export class CourseFullError extends DomainError {
 export class DuplicateEnrollmentError extends DomainError {
   readonly code = "DUPLICATE_ENROLLMENT";
 
-  constructor(
-    message = "El estudiante ya se encuentra inscrito en este curso",
-  ) {
+  constructor(message = "Ya estás inscrito en este curso") {
     super(message);
   }
 }
@@ -145,6 +143,74 @@ export class CourseHasEnrollmentsError extends DomainError {
   readonly code = "COURSE_HAS_ENROLLMENTS";
 
   constructor(message = "No se puede eliminar un curso con inscripciones") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when a student code is already used by another student.
+ */
+export class DuplicateStudentCodeError extends DomainError {
+  readonly code = "DUPLICATE_STUDENT_CODE";
+
+  constructor(message = "Ya existe un estudiante con ese código") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when an inactive student tries to enroll.
+ */
+export class InactiveStudentError extends DomainError {
+  readonly code = "INACTIVE_STUDENT";
+
+  constructor(message = "El estudiante está inactivo") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when a STUDENT user has no student profile.
+ */
+export class StudentProfileNotFoundError extends DomainError {
+  readonly code = "STUDENT_PROFILE_NOT_FOUND";
+
+  constructor(message = "No tienes un perfil de estudiante registrado") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when cancelling an enrollment that is already cancelled.
+ */
+export class EnrollmentAlreadyCancelledError extends DomainError {
+  readonly code = "ENROLLMENT_ALREADY_CANCELLED";
+
+  constructor(message = "La inscripción ya está cancelada") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when cancelling an enrollment that already has grades.
+ */
+export class EnrollmentHasGradesError extends DomainError {
+  readonly code = "ENROLLMENT_HAS_GRADES";
+
+  constructor(
+    message = "No se puede cancelar una inscripción con notas registradas",
+  ) {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when an ADMIN enrolls without indicating the student.
+ */
+export class StudentRequiredError extends DomainError {
+  readonly code = "STUDENT_REQUIRED";
+
+  constructor(message = "Debes indicar el estudiante a inscribir") {
     super(message);
   }
 }

@@ -8,7 +8,7 @@ import {
 } from "@nestjs/swagger";
 import { Roles } from "../../shared/decorators/roles.decorator";
 import { Role } from "../../shared/enums/role.enum";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { CreateStaffUserDto } from "./dto/create-staff-user.dto";
 import { ListUsersQueryDto } from "./dto/list-users-query.dto";
 import { UserResponseDto } from "./dto/user-response.dto";
 import { UsersService } from "./users.service";
@@ -32,7 +32,7 @@ export class UsersController {
   @ApiOperation({ summary: "Create a user (ADMIN)" })
   @ApiResponse({ status: HttpStatus.CREATED, type: UserResponseDto })
   @ApiResponse({ status: HttpStatus.CONFLICT, description: "Email in use" })
-  create(@Body() dto: CreateUserDto): Promise<UserResponseDto> {
+  create(@Body() dto: CreateStaffUserDto): Promise<UserResponseDto> {
     return this.usersService.create(dto);
   }
 

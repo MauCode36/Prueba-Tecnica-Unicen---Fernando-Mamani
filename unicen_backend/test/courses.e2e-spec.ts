@@ -122,9 +122,19 @@ describe("Subjects and courses (e2e)", () => {
       .set(auth("student"))
       .expect(200);
 
-    const first = (res.body as Record<string, unknown>[])[0];
-    expect(first).toHaveProperty("availableSeats");
-    expect(first).toHaveProperty("isEnrolled", false);
+    const courses = res.body as {
+      availableSeats: number;
+      isEnrolled: boolean;
+      subject: { code: string };
+    }[];
+    expect(courses[0]).toHaveProperty("availableSeats");
+    // The seed enrolls this student in BDD-201 A but not in SIS-301 A.
+    expect(courses.find((c) => c.subject.code === "BDD-201")?.isEnrolled).toBe(
+      true,
+    );
+    expect(courses.find((c) => c.subject.code === "SIS-301")?.isEnrolled).toBe(
+      false,
+    );
   });
 
   it("another teacher cannot list the enrolled students of a course (403)", async () => {

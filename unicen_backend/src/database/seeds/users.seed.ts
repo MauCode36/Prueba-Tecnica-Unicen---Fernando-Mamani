@@ -33,6 +33,18 @@ const BASE_USERS: ReadonlyArray<{
     password: "Student123!",
     role: Role.STUDENT,
   },
+  {
+    name: "Luis Fernando Quispe",
+    email: "estudiante2@unicen.edu.bo",
+    password: "Student123!",
+    role: Role.STUDENT,
+  },
+  {
+    name: "Camila Torrez",
+    email: "estudiante3@unicen.edu.bo",
+    password: "Student123!",
+    role: Role.STUDENT,
+  },
 ];
 
 /**

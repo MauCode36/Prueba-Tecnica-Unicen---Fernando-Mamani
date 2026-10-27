@@ -30,3 +30,13 @@ export function isUniqueViolation(err: unknown): boolean {
 export function isForeignKeyViolation(err: unknown): boolean {
   return getPostgresCode(err) === FOREIGN_KEY_VIOLATION;
 }
+
+/**
+ * Reads the violated constraint name from a PostgreSQL query failure.
+ * @param err - Any thrown value.
+ * @returns The constraint name, or undefined when not available.
+ */
+export function getViolatedConstraint(err: unknown): string | undefined {
+  if (!(err instanceof QueryFailedError)) return undefined;
+  return (err.driverError as { constraint?: string } | undefined)?.constraint;
+}

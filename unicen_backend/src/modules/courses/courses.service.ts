@@ -182,6 +182,24 @@ export class CoursesService {
   }
 
   /**
+   * Locks a course row for an enrollment transaction (SELECT ... FOR UPDATE).
+   * Uses the same lock as `update()` so enrollments and capacity edits serialize.
+   * @param id - Course UUID.
+   * @param manager - Transaction manager owned by the caller.
+   * @returns Capacity data of the locked course, or null if it does not exist.
+   */
+  async lockForEnrollment(
+    id: string,
+    manager: EntityManager,
+  ): Promise<{ id: string; maxCapacity: number } | null> {
+    const course = await manager.findOne(CourseEntity, {
+      where: { id },
+      lock: { mode: "pessimistic_write" },
+    });
+    return course ? { id: course.id, maxCapacity: course.maxCapacity } : null;
+  }
+
+  /**
    * Finds a course entity by id, for use by other modules (enrollments).
    * @param id - Course UUID.
    * @returns The course entity or null.

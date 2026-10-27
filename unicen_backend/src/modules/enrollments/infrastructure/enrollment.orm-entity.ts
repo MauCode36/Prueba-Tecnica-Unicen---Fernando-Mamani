@@ -5,14 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-
-/**
- * Lifecycle status of an enrollment.
- */
-export enum EnrollmentStatus {
-  ACTIVE = "ACTIVE",
-  CANCELLED = "CANCELLED",
-}
+import { EnrollmentStatus } from "../domain/enrollment-status.enum";
 
 /**
  * TypeORM entity representing the enrollments table.

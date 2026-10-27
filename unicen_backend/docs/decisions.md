@@ -113,6 +113,38 @@ Registro vivo de las decisiones técnicas del backend (formato ADR liviano). Las
 - **Fecha:** 2026-10-27
 - **Decisión:** Se reemplaza la cadena de `instanceof` por un mapa de códigos de error a estados HTTP, con `400` por defecto. Cada error nuevo suma una línea al mapa.
 
+## BD-020 — Transacción encapsulada en el puerto `EnrollmentRepository.withLockedCourse`
+- **Fecha:** 2026-10-27
+- **Decisión:** El caso de uso de inscripción solo ve un callback con operaciones del dominio (`countActive`, `findByStudent`, `save`). El adaptador abre la transacción y toma el lock con `CoursesService.lockForEnrollment(id, manager)` (provider exportado), que usa el mismo `pessimistic_write` que `CoursesService.update()`.
+- **Justificación:** El dominio no conoce `EntityManager`, y las inscripciones y la edición de cupo se serializan sobre la misma fila del curso (BD-005).
+
+## BD-021 — La reinscripción reactiva la fila `CANCELLED`
+- **Fecha:** 2026-10-27
+- **Decisión:** Si el estudiante ya tuvo una inscripción cancelada en el curso, se reactiva en lugar de insertar otra fila.
+- **Justificación:** `UNIQUE (student_id, course_id)` no admite una segunda fila; el historial queda en `updated_at`.
+
+## BD-022 — Los estudiantes se crean solo vía `/api/students`
+- **Fecha:** 2026-10-27
+- **Decisión:** `POST /api/users` usa `CreateStaffUserDto` y rechaza `role = STUDENT` (`400`). `UsersService.create` interno sigue aceptándolo para que lo use `students`, que crea usuario y perfil en una sola transacción.
+- **Justificación:** Garantiza que todo usuario STUDENT tiene perfil y puede inscribirse.
+
+## BD-023 — Desactivar un estudiante no cancela sus inscripciones
+- **Fecha:** 2026-10-27
+- **Decisión:** Desactivar bloquea el login (`LoginUseCase`) y las nuevas inscripciones (`InactiveStudentError`); las cancelaciones son explícitas.
+
+## BD-024 — Los errores de inscripción viven en `shared/errors`
+- **Fecha:** 2026-10-27
+- **Decisión:** Se agregan junto al resto para mantener un único mapa `code → HttpStatus` (BD-019). `domain/` los importa desde `shared/errors`, que no depende de ningún framework.
+
+## BD-025 — Puerto `EnrollmentGradesChecker` con implementación interina
+- **Fecha:** 2026-10-27
+- **Decisión:** La regla "no cancelar con notas" queda detrás del puerto; `PendingGradesChecker` devuelve `false` porque `grades` aún no existe. E4 cambia solo el binding del módulo por una implementación SQL.
+
+## BD-026 — El id de una inscripción nueva se genera en el dominio
+- **Fecha:** 2026-10-27
+- **Decisión:** `Enrollment.create()` genera el UUID con `node:crypto` en lugar de dejarlo a la base.
+- **Justificación:** Mantiene `Enrollment.id` como `string` (sin `null`) y permite que el repositorio use un único `save` para insertar o actualizar. `domain/` sigue sin importar NestJS ni TypeORM.
+
 ---
 
 ## Decisiones pendientes
