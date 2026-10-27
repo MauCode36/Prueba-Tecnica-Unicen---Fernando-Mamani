@@ -9,7 +9,7 @@ export const ROLE_LABELS: Record<Role, string> = {
 
 const DEFAULT_ROUTE_BY_ROLE: Record<Role, string> = {
   [Role.ADMIN]: '/subjects',
-  [Role.TEACHER]: '/courses',
+  [Role.TEACHER]: '/courses/mine',
   [Role.STUDENT]: '/courses',
 }
 

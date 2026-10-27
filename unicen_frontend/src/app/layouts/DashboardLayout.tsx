@@ -22,6 +22,7 @@ export function DashboardLayout() {
             <NavLink
               key={item.to}
               to={item.to}
+              end={item.end}
               className={({ isActive }) =>
                 cn(
                   'flex items-center gap-3 rounded-md px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-navy-tint hover:text-ink',
@@ -43,7 +44,7 @@ export function DashboardLayout() {
         </nav>
         <UserProfileCard />
       </aside>
-      <main className="flex-1 p-6">
+      <main className="min-w-0 flex-1 p-6">
         <Outlet />
       </main>
     </div>
