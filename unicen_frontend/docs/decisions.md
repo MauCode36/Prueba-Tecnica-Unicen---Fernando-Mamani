@@ -98,6 +98,27 @@ Registro vivo de las decisiones técnicas del frontend (formato ADR liviano). La
 - **Decisión:** Con Zod 4, los formularios que usan `z.coerce` o `.transform()` tipan `useForm<z.input, unknown, z.output>`.
 - **Justificación:** La entrada (`unknown`) y la salida difieren, y `z.infer` no compila con el resolver.
 
+## FD-016 — API pública por feature (`index.ts`)
+- **Fecha:** 2026-10-27
+- **Decisión:** Un feature solo importa de otro desde `@/features/<name>`, nunca desde sus subcarpetas. Las dependencias van en un solo sentido: `courses → enrollments → students`. `enrollments` consulta `/courses` desde su propio servicio, porque `courses` ya depende de él.
+- **Justificación:** Evita ciclos y mantiene explícito qué expone cada feature.
+- **Consecuencias:** `enrollments` expone `EnrollButton`; `students` expone `useStudent`, `Student` y `StudentStatusBadge`.
+
+## FD-017 — La gestión es un concepto compartido
+- **Fecha:** 2026-10-27
+- **Decisión:** `term.utils`, `TermSelect` y `useTermFilter` viven en `shared/`, porque los usan `courses`, `enrollments` y `grades`. `useTermFilter` conserva los demás parámetros de la URL al cambiar la gestión.
+- **Justificación:** Reemplaza el uso interno que le dio FD-012 en E2.
+
+## FD-018 — Raíces de query compartidas (`QUERY_ROOTS`)
+- **Fecha:** 2026-10-27
+- **Decisión:** `shared/api/query-roots.ts` define las raíces de query por feature. Inscribir o cancelar invalida `enrollments` y `courses`, aunque falle, porque otra inscripción pudo mover los cupos.
+- **Justificación:** Un feature refresca los datos de otro sin importar sus `keys`.
+
+## FD-019 — El botón "Inscribirme" se deshabilita solo por UX
+- **Fecha:** 2026-10-27
+- **Decisión:** `EnrollButton` se deshabilita sin cupos o si ya hay inscripción, sin actualización optimista. La fuente de verdad es el `409` del backend. El tooltip del motivo cuelga de un `span`, porque un botón `disabled` no emite eventos de hover.
+- **Justificación:** El cupo y la concurrencia los decide el backend bajo lock.
+
 ---
 
 ## Decisiones pendientes
