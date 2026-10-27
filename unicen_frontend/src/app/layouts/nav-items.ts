@@ -19,6 +19,6 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { to: '/courses/mine', label: 'Mis cursos', roles: [Role.TEACHER] },
   { to: '/students', label: 'Estudiantes', roles: [Role.ADMIN] },
-  { to: '/enrollments', label: 'Inscripciones', roles: [Role.ADMIN, Role.STUDENT] },
+  { to: '/enrollments', label: 'Mis inscripciones', roles: [Role.STUDENT] },
   { to: '/grades/history', label: 'Historial académico', roles: [Role.STUDENT] },
 ]

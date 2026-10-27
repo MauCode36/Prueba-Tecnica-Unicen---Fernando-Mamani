@@ -6,6 +6,9 @@ import { LoginPage } from '@/features/auth/pages/LoginPage'
 import { CourseStudentsPage } from '@/features/courses/pages/CourseStudentsPage'
 import { CoursesPage } from '@/features/courses/pages/CoursesPage'
 import { MyCoursesPage } from '@/features/courses/pages/MyCoursesPage'
+import { MyEnrollmentsPage } from '@/features/enrollments/pages/MyEnrollmentsPage'
+import { StudentEnrollmentsPage } from '@/features/enrollments/pages/StudentEnrollmentsPage'
+import { StudentsPage } from '@/features/students/pages/StudentsPage'
 import { SubjectsPage } from '@/features/subjects/pages/SubjectsPage'
 import { PlaceholderPage } from '@/shared/components/PlaceholderPage'
 import { Role } from '@/shared/types'
@@ -38,11 +41,14 @@ export const router = createBrowserRouter([
           },
           {
             element: <ProtectedRoute roles={[Role.ADMIN]} />,
-            children: [{ path: 'students', element: <PlaceholderPage title="Estudiantes" /> }],
+            children: [
+              { path: 'students', element: <StudentsPage /> },
+              { path: 'students/:studentId/enrollments', element: <StudentEnrollmentsPage /> },
+            ],
           },
           {
-            element: <ProtectedRoute roles={[Role.ADMIN, Role.STUDENT]} />,
-            children: [{ path: 'enrollments', element: <PlaceholderPage title="Inscripciones" /> }],
+            element: <ProtectedRoute roles={[Role.STUDENT]} />,
+            children: [{ path: 'enrollments', element: <MyEnrollmentsPage /> }],
           },
           {
             element: <ProtectedRoute roles={[Role.STUDENT]} />,
