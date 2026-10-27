@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 import { AuthProvider } from '@/features/auth/context/AuthContext'
+import { TooltipProvider } from '@/shared/components/ui/tooltip'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
         <Toaster richColors />
       </AuthProvider>
     </QueryClientProvider>

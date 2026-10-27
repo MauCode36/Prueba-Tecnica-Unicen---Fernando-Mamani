@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import type { Course } from '../types'
-import { formatTerm } from '../utils/term.utils'
+import { formatTerm } from '@/shared/lib/term.utils'
 import { SeatsBadge } from './SeatsBadge'
 
 interface TeacherCourseCardProps {

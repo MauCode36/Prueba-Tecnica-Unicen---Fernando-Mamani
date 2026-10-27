@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import { buildTermOptions, formatTerm } from '../utils/term.utils'
+import { buildTermOptions, formatTerm } from '@/shared/lib/term.utils'
 
 interface TermSelectProps {
   /** Selected term, for example `2026-2`. */

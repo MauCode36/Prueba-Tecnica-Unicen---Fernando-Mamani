@@ -9,10 +9,10 @@ import { Role } from '@/shared/types'
 import { CourseFormDialog } from '../components/CourseFormDialog'
 import { CourseManagementTable } from '../components/CourseManagementTable'
 import { CourseOfferTable } from '../components/CourseOfferTable'
-import { TermSelect } from '../components/TermSelect'
+import { TermSelect } from '@/shared/components/TermSelect'
 import { useCourses } from '../hooks/useCourses'
 import { useDeleteCourse } from '../hooks/useDeleteCourse'
-import { useTermFilter } from '../hooks/useTermFilter'
+import { useTermFilter } from '@/shared/hooks/useTermFilter'
 import type { Course } from '../types'
 
 /**

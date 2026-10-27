@@ -10,6 +10,8 @@ interface DataStateProps {
   isEmpty: boolean
   /** Spanish message shown for the empty state. */
   emptyMessage: string
+  /** Optional action shown under the empty message, for example a link. */
+  emptyAction?: ReactNode
   /** Placeholder rendered while loading. */
   loadingFallback: ReactNode
   /** Retries the failed request. */
@@ -27,6 +29,7 @@ export function DataState({
   isError,
   isEmpty,
   emptyMessage,
+  emptyAction,
   loadingFallback,
   onRetry,
   children,
@@ -46,9 +49,10 @@ export function DataState({
 
   if (isEmpty) {
     return (
-      <p className="rounded-lg border border-dashed border-border p-8 text-center text-ink-muted">
-        {emptyMessage}
-      </p>
+      <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-border p-8 text-center text-ink-muted">
+        <p>{emptyMessage}</p>
+        {emptyAction}
+      </div>
     )
   }
 

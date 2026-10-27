@@ -1,8 +1,9 @@
+import { QUERY_ROOTS } from '@/shared/api/query-roots'
 import type { CoursesFilters } from '../types'
 
 /** Centralized TanStack Query keys for the courses feature. */
 export const coursesKeys = {
-  all: ['courses'] as const,
+  all: [QUERY_ROOTS.courses] as const,
   list: (filters: CoursesFilters) => [...coursesKeys.all, 'list', filters] as const,
   mine: () => [...coursesKeys.all, 'mine'] as const,
   detail: (id: string) => [...coursesKeys.all, 'detail', id] as const,
