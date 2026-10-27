@@ -1,0 +1,37 @@
+{
+  "manifestVersion": 3,
+  "name": "UNICEN",
+  "namespace": "UNICEN",
+  "files": [
+    "assets/Logos/README.md",
+    "tokens.css"
+  ],
+  "libraries": [],
+  "components": [],
+  "assetGroups": [
+    {
+      "name": "Logos",
+      "tile": "l",
+      "order": [
+        "unicen-logo.jpg"
+      ],
+      "files": [
+        {
+          "path": "assets/Logos/unicen-logo.jpg",
+          "id": "8319fccb4347baefdcf60500230ab1a0"
+        }
+      ]
+    }
+  ],
+  "storage": {
+    "files": {
+      "assets/Logos/unicen-logo.jpg": {
+        "store": "blob",
+        "id": "8319fccb4347baefdcf60500230ab1a0",
+        "bytes": 13953,
+        "type": "image/jpeg"
+      }
+    },
+    "blobBytesUsed": 13953
+  }
+}

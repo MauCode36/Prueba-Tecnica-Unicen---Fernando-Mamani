@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/outfit";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Outfit Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --color-navy: var(--navy);
+    --color-orange: var(--orange);
+    --color-navy-tint: var(--navy-tint);
+    --color-surface-100: var(--surface-100);
+    --color-surface-200: var(--surface-200);
+    --color-ink: var(--ink);
+    --color-ink-muted: var(--ink-muted);
+    --color-accent-text: var(--accent-text);
+    --color-border-strong: var(--border-strong);
+    --color-brand-surface: var(--brand-surface);
+    --color-on-brand: var(--on-brand);
+    --color-success: var(--success);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* UNICEN design tokens (DESIGN.md / design/tokens.json) */
+    --navy: #01274b;
+    --orange: #ed6907;
+    --surface-100: #ffffff;
+    --surface-200: #f3f6fa;
+    --navy-tint: #e6ecf3;
+    --brand-surface: #01274b;
+    --on-brand: #ffffff;
+    --ink: #01274b;
+    --ink-muted: #4a5d74;
+    --accent-text: #b54d00;
+    --border-strong: #6b7f98;
+    --success: #1e7d4f;
+
+    --background: var(--surface-100);
+    --foreground: var(--ink);
+    --card: var(--surface-100);
+    --card-foreground: var(--ink);
+    --popover: var(--surface-100);
+    --popover-foreground: var(--ink);
+    --primary: #01274b;
+    --primary-foreground: #ffffff;
+    --secondary: var(--surface-200);
+    --secondary-foreground: var(--ink);
+    --muted: var(--surface-200);
+    --muted-foreground: var(--ink-muted);
+    --accent: var(--navy-tint);
+    --accent-foreground: var(--ink);
+    --destructive: #b3261e;
+    --border: #d5dde7;
+    --input: var(--border-strong);
+    --ring: #ed6907;
+    --chart-1: #01274b;
+    --chart-2: #ed6907;
+    --chart-3: #4a5d74;
+    --chart-4: #6b7f98;
+    --chart-5: #d5dde7;
+    --radius: 0.625rem;
+    --sidebar: var(--surface-200);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: #01274b;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: var(--navy-tint);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: #d5dde7;
+    --sidebar-ring: #ed6907;
+}
+
+.dark {
+    --navy: #01274b;
+    --orange: #ed6907;
+    --surface-100: #0b1a2e;
+    --surface-200: #12243b;
+    --navy-tint: #1b3354;
+    --brand-surface: #1b4170;
+    --on-brand: #ffffff;
+    --ink: #eef2f7;
+    --ink-muted: #a9b6c6;
+    --accent-text: #ff8a33;
+    --border-strong: #5d708a;
+    --success: #5fd49a;
+
+    --primary: #8fb3dc;
+    --primary-foreground: #0b1a2e;
+    --destructive: #ff8a80;
+    --border: #2a3d56;
+    --sidebar-primary: #8fb3dc;
+    --sidebar-primary-foreground: #0b1a2e;
+    --sidebar-border: #2a3d56;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
