@@ -20,14 +20,14 @@ export class TypeOrmEnrollmentRepository implements EnrollmentRepository {
       id: enrollment.id,
       studentId: enrollment.studentId,
       courseId: enrollment.courseId,
-      enrollmentDate: enrollment.enrollmentDate,
+      createdAt: enrollment.enrollmentDate,
     });
     const saved = await this.ormRepository.save(orm);
     return new Enrollment(
       saved.id,
       saved.studentId,
       saved.courseId,
-      saved.enrollmentDate,
+      saved.createdAt,
     );
   }
 
@@ -38,7 +38,7 @@ export class TypeOrmEnrollmentRepository implements EnrollmentRepository {
       found.id,
       found.studentId,
       found.courseId,
-      found.enrollmentDate,
+      found.createdAt,
     );
   }
 

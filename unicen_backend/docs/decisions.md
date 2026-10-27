@@ -94,6 +94,25 @@ Registro vivo de las decisiones técnicas del backend (formato ADR liviano). Las
 - **Decisión:** Dockerfile multi-stage (`node:22-alpine`). Al iniciar, se ejecutan las migraciones, luego el seed (si no hay datos) y finalmente `start:prod`. En el compose, la API depende de la base de datos con `condition: service_healthy` (healthcheck con `pg_isready`).
 - **Justificación:** `docker compose up` levanta un entorno funcional y con datos de prueba sin pasos manuales.
 
+## BD-016 — Integridad referencial para borrados
+- **Fecha:** 2026-10-27
+- **Contexto:** No se deben borrar materias con cursos ni cursos con inscripciones, y `subjects` no puede depender de `courses` (dependencia circular de módulos).
+- **Decisión:** `ON DELETE RESTRICT` en `courses.subject_id` y `enrollments.course_id`. El service traduce el error `23503` de PostgreSQL a `SubjectInUseError` / `CourseHasEnrollmentsError` (`409`).
+- **Justificación:** La base de datos garantiza la regla incluso ante concurrencia y los módulos quedan desacoplados.
+
+## BD-017 — Proyección de lectura de cupos
+- **Fecha:** 2026-10-27
+- **Decisión:** `courses` calcula `enrolledCount`, `availableSeats` e `isEnrolled` con subconsultas SQL sobre `enrollments` en un solo query (`CoursesQueryBuilder`), sin N+1. Las escrituras de inscripciones siguen siendo exclusivas del módulo `enrollments`.
+- **Consecuencias:** `isEnrolled` se resuelve por `students.user_id` a partir del `sub` del token; es `false` si el usuario no tiene perfil de estudiante.
+
+## BD-018 — `enrollments.student_id` apunta al perfil `students.id`
+- **Fecha:** 2026-10-27
+- **Decisión:** La inscripción pertenece al perfil académico (`student_code`, `program`), no a la cuenta. `students.user_id` (único) enlaza el perfil con `users`. E2 adelanta las tablas `students` y `enrollments` en su migración; HU-09 y E3 agregan la lógica sin reescribirla. `enrollments` pasa de `enrollment_date` a `created_at`/`updated_at` más `status` (`ACTIVE`/`CANCELLED`).
+
+## BD-019 — Mapa `code → HttpStatus` en `DomainExceptionFilter`
+- **Fecha:** 2026-10-27
+- **Decisión:** Se reemplaza la cadena de `instanceof` por un mapa de códigos de error a estados HTTP, con `400` por defecto. Cada error nuevo suma una línea al mapa.
+
 ---
 
 ## Decisiones pendientes

@@ -78,3 +78,73 @@ export class ForbiddenActionError extends DomainError {
     super(message);
   }
 }
+
+/**
+ * Thrown when a subject code is already used by another subject.
+ */
+export class DuplicateSubjectCodeError extends DomainError {
+  readonly code = "DUPLICATE_SUBJECT_CODE";
+
+  constructor(message = "Ya existe una materia con ese código") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when deleting a subject that still has courses.
+ */
+export class SubjectInUseError extends DomainError {
+  readonly code = "SUBJECT_IN_USE";
+
+  constructor(
+    message = "No se puede eliminar una materia con cursos asociados",
+  ) {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when a (subject, term, section) course already exists.
+ */
+export class DuplicateCourseError extends DomainError {
+  readonly code = "DUPLICATE_COURSE";
+
+  constructor(
+    message = "Ya existe ese paralelo para la materia en esta gestión",
+  ) {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when the user assigned as course teacher is not an active teacher.
+ */
+export class InvalidCourseTeacherError extends DomainError {
+  readonly code = "INVALID_COURSE_TEACHER";
+
+  constructor(message = "El docente asignado debe tener rol docente") {
+    super(message);
+  }
+}
+
+/**
+ * Thrown when lowering a course capacity below its active enrollments.
+ */
+export class CapacityBelowEnrollmentError extends DomainError {
+  readonly code = "CAPACITY_BELOW_ENROLLMENT";
+
+  constructor(enrolled: number) {
+    super(`El cupo no puede ser menor a los inscritos actuales (${enrolled})`);
+  }
+}
+
+/**
+ * Thrown when deleting a course that has enrollments.
+ */
+export class CourseHasEnrollmentsError extends DomainError {
+  readonly code = "COURSE_HAS_ENROLLMENTS";
+
+  constructor(message = "No se puede eliminar un curso con inscripciones") {
+    super(message);
+  }
+}
